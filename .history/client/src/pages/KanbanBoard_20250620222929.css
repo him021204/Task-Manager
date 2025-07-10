@@ -1,0 +1,103 @@
+.kanban-progress-bar {
+  width: 100%;
+  height: 12px;
+  background: #e0e7ff;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 4px #2563eb22;
+}
+.kanban-progress-bar-inner {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981 0%, #2563eb 100%);
+  border-radius: 8px;
+  transition: width 0.4s;
+}
+
+.kanban-column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.kanban-column-count {
+  background: #2563eb;
+  color: #fff;
+  font-size: 0.95em;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 2px 12px;
+  margin-left: 8px;
+}
+
+.kanban-add-task-btn {
+  background: linear-gradient(90deg, #2563eb 0%, #10b981 100%);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.01rem;
+  font-weight: 600;
+  padding: 0.4rem 1.1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background 0.18s, box-shadow 0.18s;
+  box-shadow: 0 1px 4px #2563eb22;
+}
+.kanban-add-task-btn:hover {
+  background: linear-gradient(90deg, #10b981 0%, #2563eb 100%);
+}
+
+.kanban-task {
+  position: relative;
+  border-left: 5px solid #2563eb22;
+  transition: box-shadow 0.18s, border 0.18s, transform 0.18s;
+}
+.kanban-task:hover {
+  box-shadow: 0 4px 16px #2563eb33;
+  transform: translateY(-2px) scale(1.02);
+  border-left: 5px solid #2563eb;
+}
+
+.kanban-task-status-tag {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 0.85em;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: #e0e7ff;
+  color: #2563eb;
+  letter-spacing: 0.5px;
+}
+
+.kanban-task-assignee {
+  display: flex;
+  align-items: center;
+  margin-top: 0.3rem;
+  font-size: 0.97em;
+  color: #64748b;
+  gap: 0.5rem;
+}
+.kanban-task-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1em;
+  box-shadow: 0 1px 4px #2563eb22;
+}
+
+.kanban-task-desc {
+  font-size: 0.97em;
+  color: #64748b;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  min-height: 18px;
+}

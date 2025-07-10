@@ -1,0 +1,193 @@
+.register-bg {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e0e7ff 0%, #f9fafb 100%);
+  padding: 3rem 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative blurred circle for depth */
+.register-bg::before {
+  content: "";
+  position: absolute;
+  top: 12%;
+  left: 65%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, #22c55e33 0%, transparent 70%);
+  filter: blur(30px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Glassy register card */
+.register-form {
+  width: 100%;
+  max-width: 410px;
+  background: rgba(255,255,255,0.97);
+  border-radius: 1.3rem;
+  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.13), 0 2px 8px rgba(37, 99, 235, 0.08);
+  padding: 2.7rem 2.2rem 2rem 2.2rem;
+  margin: 0 auto;
+  border: 1.5px solid #e0e7ef;
+  transition: box-shadow 0.2s;
+  backdrop-filter: blur(2px);
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Logo or avatar area */
+.register-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb 60%, #7c3aed 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.1rem auto;
+  box-shadow: 0 2px 12px rgba(34, 197, 94, 0.10);
+}
+.register-avatar svg {
+  width: 38px;
+  height: 38px;
+  color: #fff;
+}
+
+.register-title {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: #2563eb;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.7rem;
+  text-shadow: 0 2px 8px #e0e7ff;
+}
+
+.register-alert {
+  background: #fef2f2;
+  border: 1.5px solid #fecaca;
+  color: #dc2626;
+  padding: 0.85rem 1.2rem;
+  border-radius: 0.7rem;
+  margin-bottom: 1.1rem;
+  font-size: 1.05rem;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+}
+
+.register-label {
+  display: block;
+  font-size: 1.07rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.1px;
+}
+
+.register-input {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 1.08rem;
+  color: #1e293b;
+  background: #f8fafc;
+  margin-bottom: 0.25rem;
+  transition: border 0.2s, box-shadow 0.2s;
+  font-weight: 500;
+}
+
+.register-input:focus {
+  outline: none;
+  border-color: #22c55e;
+  background: #fff;
+  box-shadow: 0 0 0 2px #22c55e22;
+}
+
+.register-input.error {
+  border-color: #f87171;
+  background: #fef2f2;
+}
+
+.register-error {
+  color: #dc2626;
+  font-size: 0.98rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.register-btn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.7rem 0;
+  background: linear-gradient(90deg, #22c55e 0%, #2563eb 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.13rem;
+  border: none;
+  border-radius: 0.5rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(34, 197, 94, 0.10);
+  letter-spacing: 0.1px;
+}
+
+.register-btn:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.register-btn:hover:not(:disabled) {
+  background: linear-gradient(90deg, #16a34a 0%, #2563eb 100%);
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.13);
+}
+
+.register-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.7rem;
+  width: 100%;
+}
+
+.register-link-btn {
+  background: none;
+  border: none;
+  color: #22c55e;
+  font-weight: 600;
+  font-size: 1.01rem;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+  letter-spacing: 0.1px;
+}
+
+.register-link-btn:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+@media (max-width: 500px) {
+  .register-form {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+    min-width: 0;
+  }
+  .register-title {
+    font-size: 1.3rem;
+  }
+}

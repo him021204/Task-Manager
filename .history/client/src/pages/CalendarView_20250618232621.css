@@ -1,0 +1,157 @@
+/* Calendar Background */
+.calendar-bg {
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #f9fafb 60%, #e0e7ff 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3rem 0 2rem 0;
+}
+
+/* Calendar Container Card */
+.calendar-container {
+  width: 100%;
+  max-width: 950px;
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(37, 99, 235, 0.10), 0 1.5px 6px rgba(16, 185, 129, 0.06);
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin: 0 1rem;
+  border: 1.5px solid #e0e7ef;
+  transition: box-shadow 0.2s;
+}
+
+/* Calendar Title */
+.calendar-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #2563eb;
+  margin-bottom: 2.2rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px #e0e7ff;
+}
+
+/* Status Message */
+.calendar-status {
+  text-align: center;
+  color: #2563eb;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  font-size: 1.08rem;
+}
+
+/* Error Message */
+.calendar-error {
+  text-align: center;
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1.5px solid #fecaca;
+  padding: 0.85rem 1.2rem;
+  border-radius: 0.7rem;
+  margin-bottom: 1.2rem;
+  font-size: 1.08rem;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+}
+
+/* react-big-calendar overrides */
+.rbc-calendar {
+  background: #fff;
+  border-radius: 1.2rem;
+  min-height: 600px;
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+.rbc-toolbar {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2563eb;
+  margin-bottom: 1.5rem;
+  background: #f1f5f9;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.2rem;
+  box-shadow: 0 1px 4px rgba(37,99,235,0.04);
+}
+
+.rbc-toolbar button {
+  background: #fff;
+  color: #2563eb;
+  border: 1.5px solid #e0e7ef;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  margin: 0 0.2rem;
+  font-weight: 500;
+  transition: background 0.18s, color 0.18s;
+  cursor: pointer;
+}
+
+.rbc-toolbar button.rbc-active,
+.rbc-toolbar button:focus {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+
+.rbc-month-view, .rbc-time-view, .rbc-agenda-view {
+  background: #fff;
+  border-radius: 1rem;
+}
+
+.rbc-month-row {
+  min-height: 80px;
+}
+
+.rbc-date-cell {
+  font-weight: 600;
+  color: #64748b;
+  font-size: 1.05rem;
+}
+
+.rbc-today {
+  background: #e0e7ff !important;
+}
+
+.rbc-event {
+  background: linear-gradient(90deg, #2563eb 0%, #10b981 100%);
+  color: #fff;
+  border: none;
+  border-radius: 0.6rem;
+  font-size: 0.98rem;
+  font-weight: 500;
+  padding: 2px 8px;
+  box-shadow: 0 1px 4px rgba(37,99,235,0.08);
+  transition: background 0.2s;
+}
+
+.rbc-event:hover {
+  background: linear-gradient(90deg, #7c3aed 0%, #2563eb 100%);
+}
+
+.rbc-off-range-bg {
+  background: #f1f5f9;
+}
+
+.rbc-off-range {
+  color: #cbd5e1;
+}
+
+.rbc-header {
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #2563eb;
+  background: #f1f5f9;
+  border-bottom: 1.5px solid #e0e7ef;
+  padding: 0.7rem 0;
+}
+
+@media (max-width: 700px) {
+  .calendar-container {
+    padding: 1.2rem 0.3rem 1rem 0.3rem;
+    min-width: 0;
+  }
+  .calendar-title {
+    font-size: 1.3rem;
+  }
+}
