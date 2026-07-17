@@ -600,6 +600,15 @@
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
 }
 
+.dashboard-filter-select option,
+.create-form-card select option,
+.create-form-card option,
+.modal-add-task select option,
+.project-input option {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
 /* Projects Card */
 .projects-card {
   background: rgba(255, 255, 255, 0.08);

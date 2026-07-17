@@ -43,8 +43,8 @@ const Profile = () => {
           onClick={() => navigate('/dashboard')}
           aria-label="Back to Dashboard"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M19 12H5M12 19l-7-7 7-7" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          <svg width="24" height="24" viewBox="0 0 24 24" style={{ fill: 'none', stroke: '#ffffff', strokeWidth: '2.5px' }}>
+            <path d="M19 12H5M12 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
         <div className="profile-header">
