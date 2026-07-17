@@ -14,10 +14,11 @@ router.put('/:id/complete', authenticate, markTaskCompleted);
 router.put('/:id', authenticate, updateTask);
 router.post('/', authenticate, async (req, res) => {
   try {
-    const { title, dueDate } = req.body;
+    const { title, dueDate, recurrence } = req.body;
     const task = await Task.create({
       title,
       dueDate,
+      recurrence: recurrence || 'None',
       createdBy: req.user._id,
       // ...other fields as needed
     });

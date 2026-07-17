@@ -29,6 +29,24 @@ const Dashboard = () => {
   const [newTask, setNewTask] = useState('');
   const [taskLoading, setTaskLoading] = useState(false);
 
+  // Templates & Recurrence states
+  const [templates, setTemplates] = useState([]);
+  const [selectedTemplateId, setSelectedTemplateId] = useState('');
+  const [taskRecurrence, setTaskRecurrence] = useState({});
+  const [taskDueDate, setTaskDueDate] = useState({});
+
+  // Fetch templates from backend
+  const fetchTemplates = useCallback(async () => {
+    try {
+      const res = await axios.get('http://localhost:5000/api/templates', {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+      setTemplates(res.data);
+    } catch {
+      // Silently ignore
+    }
+  }, []);
+
   // Fetch projects from backend
   const fetchProjects = useCallback(async () => {
     try {
@@ -47,7 +65,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchProjects();
-  }, [fetchProjects]);
+    fetchTemplates();
+  }, [fetchProjects, fetchTemplates]);
 
   const handleCreateProject = async (e) => {
     e.preventDefault();
@@ -70,7 +89,8 @@ const Dashboard = () => {
           title: trimmedProject,
           description: newDescription,
           tasks: tasksToSend,
-          dueDate: newProjectDueDate || undefined // <-- This will now work!
+          dueDate: newProjectDueDate || undefined,
+          templateId: selectedTemplateId || undefined
         },
         { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
       );
@@ -79,11 +99,37 @@ const Dashboard = () => {
       setShowCreate(false);
       setNewTasks([{ title: '', dueDate: '' }]);
       setNewProjectDueDate('');
+      setSelectedTemplateId('');
       fetchProjects(); // Refresh list
     } catch {
       setError('Failed to create project. Please try again.');
     } finally {
       setCreateLoading(false);
+    }
+  };
+  const handleSaveAsTemplate = async (project) => {
+    try {
+      const templateTitle = prompt('Enter a name for this project template:', `${project.title} Template`);
+      if (!templateTitle || !templateTitle.trim()) return;
+
+      const tasksToSave = (project.tasks || []).map(t => ({
+        title: t.title,
+        priority: t.priority || 'Medium'
+      }));
+
+      await axios.post(
+        'http://localhost:5000/api/templates',
+        {
+          title: templateTitle.trim(),
+          description: `Template saved from project: ${project.title}`,
+          tasks: tasksToSave
+        },
+        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+      );
+      alert('Project saved as template successfully!');
+      fetchTemplates(); // Refresh template list
+    } catch {
+      setError('Failed to save project as template.');
     }
   };
   const toggleExpandProject = (projectId) => {
@@ -338,6 +384,34 @@ const Dashboard = () => {
                 disabled={createLoading}
                 maxLength={100}
               />
+              <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                <label style={{ fontSize: '0.85em', fontWeight: 500, color: '#475569' }}>Project Template:</label>
+                <select
+                  value={selectedTemplateId}
+                  onChange={(e) => {
+                    setSelectedTemplateId(e.target.value);
+                    const selected = templates.find(t => t._id === e.target.value);
+                    if (selected && !newProject.trim()) {
+                      setNewProject(selected.title);
+                    }
+                  }}
+                  className="project-input"
+                  style={{ width: '100%', padding: '6px 10px', borderRadius: 6, border: '1.5px solid #cbd5e1' }}
+                  disabled={createLoading}
+                >
+                  <option value="">Blank Project (No Template)</option>
+                  {templates.map(tpl => (
+                    <option key={tpl._id} value={tpl._id}>
+                      {tpl.title} {tpl.isDefault ? '(System)' : '(Custom)'}
+                    </option>
+                  ))}
+                </select>
+                {selectedTemplateId && (
+                  <span style={{ fontSize: '0.78em', color: '#64748b' }}>
+                    * Selecting a template will automatically pre-populate standard tasks.
+                  </span>
+                )}
+              </div>
               <textarea
                 value={newDescription}
                 onChange={e => setNewDescription(e.target.value)}
@@ -522,6 +596,16 @@ const Dashboard = () => {
                         >
                           🗑
                         </button>
+                        <button
+                          className="project-action-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleSaveAsTemplate(project);
+                          }}
+                          title="Save Project as Template"
+                        >
+                          💾
+                        </button>
                       </div>
                       {/* Expanded task list */}
                       {expandedProjects.includes(project._id) && (
@@ -585,6 +669,22 @@ const Dashboard = () => {
                                   {task.dueDate && (
                                     <span className="task-due">
                                       {new Date(task.dueDate).toLocaleDateString()}
+                                    </span>
+                                  )}
+                                  {task.recurrence && task.recurrence !== 'None' && (
+                                    <span style={{
+                                      fontSize: '0.8em',
+                                      color: '#7c3aed',
+                                      background: '#f3e8ff',
+                                      padding: '2px 8px',
+                                      borderRadius: '12px',
+                                      marginLeft: 8,
+                                      fontWeight: 500,
+                                      display: 'inline-flex',
+                                      alignItems: 'center',
+                                      gap: 4
+                                    }}>
+                                      🔁 {task.recurrence}
                                     </span>
                                   )}
                                   <span className="task-status">{task.status || 'Active'}</span>
@@ -679,10 +779,16 @@ const Dashboard = () => {
                                 setTaskLoading(true);
                                 await axios.post(
                                   `http://localhost:5000/api/projects/${project._id}/tasks`,
-                                  { title: taskValue.trim() },
+                                  {
+                                    title: taskValue.trim(),
+                                    recurrence: taskRecurrence[project._id] || 'None',
+                                    dueDate: taskDueDate[project._id] || undefined
+                                  },
                                   { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
                                 );
                                 setNewTaskInputs(inputs => ({ ...inputs, [project._id]: '' }));
+                                setTaskRecurrence(rec => ({ ...rec, [project._id]: 'None' }));
+                                setTaskDueDate(dates => ({ ...dates, [project._id]: '' }));
                                 fetchProjects();
                               } catch {
                                 setError('Failed to add task.');
@@ -703,6 +809,36 @@ const Dashboard = () => {
                               placeholder="Add new task..."
                               className="project-input"
                               style={{ marginRight: 8, minWidth: 180 }}
+                              disabled={taskLoading}
+                            />
+                            <select
+                              value={taskRecurrence[project._id] || 'None'}
+                              onChange={e =>
+                                setTaskRecurrence(rec => ({
+                                  ...rec,
+                                  [project._id]: e.target.value
+                                }))
+                              }
+                              className="project-input"
+                              style={{ marginRight: 8, padding: '4px 6px', borderRadius: 6, border: '1.5px solid #cbd5e1' }}
+                              disabled={taskLoading}
+                            >
+                              <option value="None">No Repeat</option>
+                              <option value="Daily">Daily</option>
+                              <option value="Weekly">Weekly</option>
+                              <option value="Monthly">Monthly</option>
+                            </select>
+                            <input
+                              type="date"
+                              value={taskDueDate[project._id] || ''}
+                              onChange={e =>
+                                setTaskDueDate(dates => ({
+                                  ...dates,
+                                  [project._id]: e.target.value
+                                }))
+                              }
+                              className="project-input"
+                              style={{ marginRight: 8, padding: '4px 6px', borderRadius: 6, border: '1.5px solid #cbd5e1' }}
                               disabled={taskLoading}
                             />
                             <button

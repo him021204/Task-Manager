@@ -9,6 +9,7 @@ const taskSchema = new mongoose.Schema({
   priority: { type: String, enum: ['High', 'Medium', 'Low'], default: 'Medium' },
   dueDate: Date,
   tags: [String],
+  recurrence: { type: String, enum: ['None', 'Daily', 'Weekly', 'Monthly'], default: 'None' },
   attachments: [String], // File paths
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
   position: Number,

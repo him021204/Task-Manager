@@ -1,27 +1,46 @@
 const Project = require('../models/Project');
 const Task = require('../models/Task');
+const ProjectTemplate = require('../models/ProjectTemplate');
 const emailService = require('../utils/emailService');
 
 exports.createProject = async (req, res) => {
   try {
-    const { title, tasks } = req.body;
-    // Create tasks if provided
+    const { title, description, tasks, dueDate, templateId } = req.body;
     let taskIds = [];
-    if (Array.isArray(tasks) && tasks.length > 0) {
-      const createdTasks = await Task.insertMany(
-        tasks.map(t => ({
+    let finalTasks = [];
+
+    if (templateId) {
+      const template = await ProjectTemplate.findById(templateId);
+      if (template) {
+        finalTasks = template.tasks.map(t => ({
           title: t.title,
-          dueDate: t.dueDate,
+          priority: t.priority || 'Medium',
+          status: 'To Do',
+          columnId: 'To Do',
           createdBy: req.user._id
-        }))
-      );
+        }));
+      }
+    } else if (Array.isArray(tasks) && tasks.length > 0) {
+      finalTasks = tasks.map(t => ({
+        title: t.title,
+        dueDate: t.dueDate,
+        createdBy: req.user._id
+      }));
+    }
+
+    if (finalTasks.length > 0) {
+      const createdTasks = await Task.insertMany(finalTasks);
       taskIds = createdTasks.map(t => t._id);
     }
+
     const project = await Project.create({
       title,
+      description,
       owner: req.user._id,
-      tasks: taskIds
+      tasks: taskIds,
+      dueDate: dueDate || undefined
     });
+
     res.status(201).json(project);
   } catch (err) {
     res.status(500).json({ error: 'Server error' });
@@ -108,7 +127,7 @@ exports.markProjectCompleted = async (req, res) => {
 
 exports.addTaskToProject = async (req, res) => {
   try {
-    const { title, dueDate } = req.body;
+    const { title, dueDate, recurrence } = req.body;
     if (!title || !title.trim()) {
       return res.status(400).json({ error: 'Task title is required' });
     }
@@ -116,6 +135,7 @@ exports.addTaskToProject = async (req, res) => {
     const task = await Task.create({
       title: title.trim(),
       dueDate,
+      recurrence: recurrence || 'None',
       createdBy: req.user._id
     });
     
