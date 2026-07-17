@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const emailService = require('../utils/emailService');
 
 const generateToken = (user, secret, expiresIn) =>
   jwt.sign({ id: user._id }, secret, { expiresIn });
@@ -7,6 +8,10 @@ const generateToken = (user, secret, expiresIn) =>
 exports.register = async (req, res) => {
   try {
     const user = await User.create(req.body);
+    // Send welcome email in the background
+    emailService.sendWelcomeEmail(user.email, user.name || 'User')
+      .catch(err => console.error('Error sending welcome email:', err));
+
     res.status(201).json({ message: 'User registered' });
   } catch (err) {
     res.status(400).json({ error: err.message });

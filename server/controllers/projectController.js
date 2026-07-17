@@ -1,5 +1,6 @@
 const Project = require('../models/Project');
 const Task = require('../models/Task');
+const emailService = require('../utils/emailService');
 
 exports.createProject = async (req, res) => {
   try {
@@ -117,6 +118,11 @@ exports.addTaskToProject = async (req, res) => {
       dueDate,
       createdBy: req.user._id
     });
+    
+    // Send task notification email in the background
+    emailService.sendTaskNotificationEmail(req.user.email, req.user.name || 'User', task.title, 'created')
+      .catch(err => console.error('Error sending task notification email:', err));
+
     // Add the task to the project
     const project = await Project.findOneAndUpdate(
       { _id: req.params.id, owner: req.user._id },
