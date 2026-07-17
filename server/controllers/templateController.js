@@ -87,3 +87,20 @@ exports.createTemplate = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
+
+exports.deleteTemplate = async (req, res) => {
+  try {
+    const userId = req.user._id || req.user.id;
+    const template = await ProjectTemplate.findOneAndDelete({
+      _id: req.params.id,
+      createdBy: userId,
+      isDefault: false
+    });
+    if (!template) {
+      return res.status(404).json({ error: 'Custom template not found or unauthorized' });
+    }
+    res.json({ message: 'Template deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};

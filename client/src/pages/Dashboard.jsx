@@ -132,6 +132,20 @@ const Dashboard = () => {
       setError('Failed to save project as template.');
     }
   };
+  const handleDeleteTemplate = async (templateId) => {
+    if (!window.confirm('Are you sure you want to delete this custom template?')) return;
+    try {
+      await axios.delete(`http://localhost:5000/api/templates/${templateId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      });
+      fetchTemplates();
+      if (selectedTemplateId === templateId) {
+        setSelectedTemplateId('');
+      }
+    } catch {
+      setError('Failed to delete template.');
+    }
+  };
   const toggleExpandProject = (projectId) => {
     setExpandedProjects((prev) =>
       prev.includes(projectId)
@@ -396,18 +410,38 @@ const Dashboard = () => {
                     }
                   }}
                   className="project-input"
-                  style={{ width: '100%', padding: '6px 10px', borderRadius: 6, border: '1.5px solid #cbd5e1' }}
+                  style={{ width: '100%', padding: '6px 10px', borderRadius: 6, border: '1.5px solid #cbd5e1', color: '#000000', backgroundColor: '#ffffff' }}
                   disabled={createLoading}
                 >
-                  <option value="">Blank Project (No Template)</option>
+                  <option value="" style={{ color: '#000000', backgroundColor: '#ffffff' }}>Blank Project (No Template)</option>
                   {templates.map(tpl => (
-                    <option key={tpl._id} value={tpl._id}>
+                    <option key={tpl._id} value={tpl._id} style={{ color: '#000000', backgroundColor: '#ffffff' }}>
                       {tpl.title} {tpl.isDefault ? '(System)' : '(Custom)'}
                     </option>
                   ))}
                 </select>
+                {templates.filter(t => !t.isDefault).length > 0 && (
+                  <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                    <label style={{ fontSize: '0.8em', fontWeight: 500, color: '#475569' }}>Your Custom Templates (Click 🗑 to delete):</label>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 4 }}>
+                      {templates.filter(t => !t.isDefault).map(t => (
+                        <div key={t._id} style={{ display: 'flex', alignItems: 'center', background: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: 6, padding: '4px 10px', fontSize: '0.8em', gap: 8, color: '#0f172a' }}>
+                          <span style={{ fontWeight: 500 }}>{t.title}</span>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteTemplate(t._id)}
+                            style={{ border: 'none', background: 'none', color: '#ef4444', cursor: 'pointer', fontWeight: 'bold', fontSize: '1.1em', padding: 0 }}
+                            title="Delete Template"
+                          >
+                            🗑
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {selectedTemplateId && (
-                  <span style={{ fontSize: '0.78em', color: '#64748b' }}>
+                  <span style={{ fontSize: '0.78em', color: '#64748b', marginTop: 4 }}>
                     * Selecting a template will automatically pre-populate standard tasks.
                   </span>
                 )}
