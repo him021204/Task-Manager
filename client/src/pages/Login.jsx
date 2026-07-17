@@ -119,9 +119,6 @@ const Login = () => {
 
         {/* Additional Links */}
         <div className="login-links">
-          <button className="login-link-btn" type="button">
-            Forgot your password?
-          </button>
           <button
             className="login-link-btn"
             type="button"

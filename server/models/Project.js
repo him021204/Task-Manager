@@ -43,7 +43,7 @@ const projectSchema = new mongoose.Schema({
     default: 'active'
   },
   team: { type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Team', required: true },
+    ref: 'Team' },
   dueDate: { type: Date },
   tasks: [{
     type: mongoose.Schema.Types.ObjectId,
