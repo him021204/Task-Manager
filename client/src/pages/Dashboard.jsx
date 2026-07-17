@@ -530,13 +530,13 @@ const Dashboard = () => {
             placeholder="Search projects or tasks..."
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
-            className="project-input"
+            className="dashboard-search-input"
             style={{ minWidth: 220, maxWidth: 320 }}
           />
           <select
             value={statusFilter}
             onChange={e => setStatusFilter(e.target.value)}
-            className="project-input"
+            className="dashboard-filter-select"
             style={{ minWidth: 120 }}
           >
             <option value="All">All Status</option>

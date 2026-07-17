@@ -553,47 +553,51 @@
   padding: 20px 24px;
 }
 
-.dashboard-search-filter input[type="text"] {
+.dashboard-search-input {
   min-width: 250px;
   max-width: 350px;
   font-size: 16px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 12px 16px 12px 44px;
-  background: rgba(255, 255, 255, 0.1) url("data:image/svg+xml,%3Csvg width='16' height='16' fill='none' stroke='%23cbd5e1' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M21 21l-3.5-3.5'/%3E%3C/svg%3E") no-repeat 16px center/16px 16px;
-  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  padding: 12px 16px 12px 44px !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23cbd5e1' stroke-width='2' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M21 21l-3.5-3.5'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: 16px center !important;
+  background-size: 16px 16px !important;
+  color: #ffffff !important;
   font-weight: 500;
   transition: all 0.3s ease;
   outline: none;
 }
 
-.dashboard-search-filter input[type="text"]::placeholder {
-  color: #94a3b8;
+.dashboard-search-input::placeholder {
+  color: #94a3b8 !important;
 }
 
-.dashboard-search-filter input[type="text"]:focus {
-  border-color: #3b82f6;
-  background-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+.dashboard-search-input:focus {
+  border-color: #3b82f6 !important;
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
 }
 
-.dashboard-search-filter select {
+.dashboard-filter-select {
   min-width: 140px;
   font-size: 16px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  padding: 12px 16px !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
   font-weight: 500;
   transition: all 0.3s ease;
   outline: none;
 }
 
-.dashboard-search-filter select:focus {
-  border-color: #3b82f6;
-  background-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+.dashboard-filter-select:focus {
+  border-color: #3b82f6 !important;
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
 }
 
 /* Projects Card */
