@@ -149,42 +149,30 @@
   position: absolute;
   top: 24px;
   right: 24px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: none;
+  border: none;
   color: #ffffff;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 25;
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 28px;
   line-height: 1;
-  padding-bottom: 2px;
+  padding: 0;
+  transition: color 0.2s ease;
 }
 
 .profile-close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: rotate(90deg) scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #cbd5e1;
 }
 
 .profile-close-btn:active {
-  transform: rotate(90deg) scale(0.95);
+  color: #94a3b8;
 }
 
 @media (max-width: 600px) {
   .profile-close-btn {
     top: 16px;
     right: 16px;
-    width: 36px;
-    height: 36px;
+    font-size: 24px;
   }
 }
 
